@@ -1,3 +1,6 @@
+import json
+with open('config.json', 'r') as f:
+    config = json.load(f)
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister, execute
 from qiskit import IBMQ, Aer
 from qiskit.circuit import Parameter
@@ -6,6 +9,7 @@ try:
     from qiskit.providers.ibmq import RunnerResult
 except:
     None
+    
 
 def runReal(QCs, backend='ibmq_montreal', opt=0):
     '''
@@ -26,8 +30,10 @@ def runReal(QCs, backend='ibmq_montreal', opt=0):
     
     return job
 
-def getCounts(jobs):
+def getCounts(job):
     return job.result(decoder=RunnerResult).get_counts()
+
+IBMQ.enable_account(config['TOKEN'])
 
 provider = IBMQ.get_provider(
     hub='ibm-q-melbourne',
@@ -85,3 +91,4 @@ runtime_inputs = {
   # mitigation. Default is False.
   'measurement_error_mitigation': True # bool
 }
+
