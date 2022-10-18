@@ -26,13 +26,23 @@ def is_prime(n):
     f += 6
   return True    
 
+# def order(x,N):
+#     assert(N>x)
+#     if(math.gcd(x,N)!=1):
+#         return -1
+#     for i in range(1,N+1):
+#         if((x**i % N) == 1):
+#             return i
+    
 def order(x,N):
     assert(N>x)
     if(math.gcd(x,N)!=1):
         return -1
     for i in range(1,N+1):
-        if((x**i % N) == 1):
+        a = x
+        for j in range(1,i):
+            a = x*a % N
+        if(a==1):
             return i
-    
 
 primes = [i for i in range(0,10**3) if is_prime(i)]
